@@ -43,6 +43,10 @@ fn main() -> std::io::Result<()> {
         i += 1;
     }
 
+    if last < mmap.len() {
+        lines.push(&mmap[last..mmap.len()]);
+    }
+
     lines.sort_unstable();
     lines.dedup();
 
@@ -65,6 +69,7 @@ fn main() -> std::io::Result<()> {
     // Write all of the line slices to the output file
     for i in 0..idxs.len() {
         outf.write_all(&lines[idxs[i]])?;
+        outf.write(b"\n")?;
     }
 
     Ok(())
